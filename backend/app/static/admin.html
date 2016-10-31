@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="GitLab Pages">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.amber-indigo.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+  <title>Rainbow.Chat</title>
+      <link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
+      <link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="76x76" href="apple-icon-76x76.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114.png">
+      <link rel="apple-touch-icon" sizes="120x120" href="apple-icon-120x120.png">
+      <link rel="apple-touch-icon" sizes="144x144" href="apple-icon-144x144.png">
+      <link rel="apple-touch-icon" sizes="152x152" href="apple-icon-152x152.png">
+      <link rel="apple-touch-icon" sizes="180x180" href="apple-icon-180x180.png">
+      <link rel="icon" type="image/png" sizes="192x192"  href="android-icon-192x192.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+      <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+      <link rel="manifest" href="manifest.json">
+      <meta name="msapplication-TileColor" content="#ffffff">
+      <meta name="msapplication-TileImage" content="ms-icon-144x144.png">
+      <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+         <img class="logo-small" src="images/rc-icon.png" alt="rainbow-chat-logo" id="logo">
+
+        <span class="mdl-layout-title">Rainbow.Chat</span>
+        <div class="mdl-layout-title admin-title"> Admin Panel</div>
+        <div class="mdl-layout-spacer"></div>
+      </div>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--3-col">
+        </div>
+        <div class="mdl-cell mdl-cell--6-col">
+          <div class="mdl-card mdl-shadow--2dp" style="width:100%">
+            <div class="mdl-card__title">
+              <h3>Hello Admin</h3>
+            </div>
+
+            <ul class='mdl-list'>
+            <h5 id="status-chart">Current Status Chart</h5>
+              <li class="mdl-list__item">
+
+                <span class="mdl-list__item-primary-content">
+                <i class="bullet material-icons mdl-list__item-icon">lens</i>
+                Next meetup is Oct 23rd
+              </span>
+              <a  id="trash" class="mdl-list__item-secondary-action" href="#">
+                <i class="material-icons">delete_forever</i>
+              </a>
+            </li>
+              <li class="mdl-list__item">
+                <span class="mdl-list__item-primary-content">
+              <i class="bullet material-icons mdl-list__item-icon" >lens</i>
+                Volunteer Shifts are currently from 7-9pm weekday evenings.
+              </span>
+              <a id="trash" class="mdl-list__item-secondary-action" href="#"><i class="material-icons">delete_forever</i></a> </li>
+            </ul>
+
+          <h5 id="status-chart">Volunteer News</h5>
+          <form action="#" style="margin-left:5%">
+            <div class="mdl-textfield mdl-js-textfield">
+              <input class="mdl-textfield__input" type="text" id="sample3" style="width:100%">
+              <label class="mdl-textfield__label" for="sample3">Add Volunteer News Here...</label>
+            </div>
+          </form>
+        <div class="mdl-cell mdl-cell--3-col">
+        </div>
+        <!-- Table -->
+       
+        <table style="margin:0 auto" class="mdl-data-table mdl-data-table--selectable mdl-js-data-table  mdl-shadow--2dp">
+         <h5 id="status-chart">Volunteer Admin</h5>
+      <thead>
+        <tr>
+          <th class="mdl-data-table__cell--non-numeric">Name</th>
+          <th>Rating</th>
+          <th>Location</th>
+          <th>Accept/Revoke</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric"><span class="mdl-list__item-primary-content">Simba</span></td>
+          <td>25</td>
+          <td>Toronto</td>
+          <td>
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="list-switch-1">
+              <input type="checkbox" id="list-switch-1" class="mdl-switch__input" />
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Mulan</td>
+          <td>50</td>
+          <td>Hamilton</td>
+          <td>
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="list-switch-2">
+              <input type="checkbox" id="list-switch-2" class="mdl-switch__input" />
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">John Smith</td>
+          <td>10</td>
+          <td>Kelowna</td>
+          <td>
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="list-switch-3">
+              <input type="checkbox" id="list-switch-3" class="mdl-switch__input" />
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Scar</td>
+          <td>10</td>
+          <td>Kingston</td>
+          <td>
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="list-switch-4">
+              <input type="checkbox" id="list-switch-4" class="mdl-switch__input" />
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Pumpa</td>
+          <td>10</td>
+          <td>Calgary</td>
+          <td>
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="list-switch-5">
+              <input type="checkbox" id="list-switch-5" class="mdl-switch__input" />
+            </label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="mdl-button mdl-js-button mdl-button--raised" enabled>Delete </button>
+    </div>
+    </main>
+  </div>
+</body>
+
+</html>

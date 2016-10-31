@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="GitLab Pages">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.amber-indigo.min.css" />
+  <link rel="stylesheet" href="../static/style.css">
+  <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+  <title>Rainbow.Chat</title>
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            var socket;
+            $(document).ready(function(){
+                var room;
+                socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
+                socket.on('connect', function(data) {
+                    $('.room_names').each(function(){
+                        socket.emit('joined', {}, this.id);
+                    });
+                });
+                socket.on('status', function(data) {
+                  console.log('pickle', data);
+        
+                    //$('#chat').val($('#chat').val() + '<' + data.msg + '>\n');
+                    //$('#chat').scrollTop($('#chat')[0].scrollHeight);
+                });
+                socket.on('message', function(data) {
+                    console.log('adoifuadscciofuaoisfuiodsauf')
+
+                    console.log(data);
+                  var msg = data.msg;
+                  var name = data.name;
+                  var room = data.room;
+                  var bigPapa = document.createElement("div");
+
+                  bigPapa.className = "mdl-list__item";
+
+                  var iconElContainer = document.createElement("span");
+                  iconElContainer.className = "mdl-list__item-primary-content";
+                  var iconEl = document.createElement("i");
+                  iconEl.className="material-icons mdl-list__item-avatar";
+                  iconEl.innerHTML="person";
+                  var nameContainer = document.createElement("span");
+                  nameContainer.innerHTML = name;
+                  var messageContainer = document.createElement("div");
+                  messageContainer.className = "bubble";
+                  var message = document.createElement("p");
+                  message.innerHTML = msg;
+                  messageContainer.appendChild(message);
+                  var itgoeshere = document.getElementById("scroll-tab-" + room);
+                  itgoeshere.appendChild(bigPapa);
+
+                  if (name === "Volunteer") {
+                    iconElContainer.appendChild(iconEl);
+                    iconElContainer.appendChild(nameContainer);
+                    bigPapa.appendChild(iconElContainer);
+                    bigPapa.appendChild(messageContainer);
+                  }
+                  else {
+                    var spacer = document.createElement("div");
+                    spacer.className = "mdl-layout-spacer";
+
+                    iconElContainer.appendChild(spacer);
+                    iconElContainer.appendChild(nameContainer);
+                    iconElContainer.appendChild(iconEl);
+                    messageContainer.classList.add("bubble-alt");
+                    bigPapa.appendChild(messageContainer);
+                    bigPapa.appendChild(iconElContainer);
+                  }
+                 
+                });
+                socket.on('room', function(data) {
+                    room = data.msg;
+                });
+                $('.text').keypress(function(e) {
+                    var rm = $(e.target)[0];
+                    var code = e.keyCode || e.which;
+                    if (code == 13) {
+                        console.log(rm);
+                        text = $(e.target).val();
+                        console.log(text)
+                        $(e.target).val('');
+                        socket.emit('text', {msg: text}, {room: rm.id});
+                    }
+                });
+            });
+            function leave_room() {
+                socket.emit('left', {}, function() {
+                    socket.disconnect();
+
+                    // go back to the login page
+                    window.location.href = "{{ url_for('main.index') }}";
+                });
+            }
+        </script>
+    </head>
+
+  <body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <img class="logo-small grow" src="../static/rc-icon.png" alt="rainbow-chat-logo" id="logo">
+
+        <span class="mdl-layout-title">Welcome to Rainbow.Chat - Be kind</span>
+        <div class="mdl-layout-spacer"></div>
+        <a href="http://www.yahoo.com">
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="panic">
+            Leave Site Now!
+          </button>
+        </a>
+        <span for="panic" class="mdl-tooltip">Panic Button Exits Chat Fast</span>
+      </div>
+        <!-- Tabs -->
+          <div class="mdl-layout__tab-bar mdl-js-ripple-effect" id="tab_link_container">
+
+          </div>
+    </header>
+
+    <main class="mdl-layout__content" id="tab_body_container">
+    </main>
+
+      {%  for room in rooms %}
+        {% if loop.index == 1 %}
+        <script>
+        // create tab link
+            var tab_link_container = document.getElementById("tab_link_container");
+            var tab_link = document.createElement("a");
+            var tab_href = "scroll-tab-" + {{ room }};
+            tab_link.setAttribute('href', '#' + tab_href);
+            tab_link.setAttribute('class', 'mdl-layout__tab is-active');
+            tab_link.innerHTML = {{ room }};
+            tab_link_container.appendChild(tab_link);
+        // create tab body
+            var tab_body_container = document.getElementById("tab_body_container");
+            var tab_body = document.createElement("section");
+            tab_body.setAttribute('class', "mdl-layout__tab-panel is-active");
+            tab_body.setAttribute('id', tab_href);
+            tab_body_container.appendChild(tab_body);
+
+            var input_field = document.createElement('input');
+            input_field.setAttribute('class', 'text mdl-textfield__input');
+            input_field.setAttribute('type', 'text');
+            input_field.setAttribute('id', {{ room }});
+
+        // fill body with tasty divs
+
+            var form_grid = document.createElement('div');
+            form_grid.setAttribute('class', 'mdl-grid');
+            //form_grid.setAttribute('action', none);
+
+            var text_holder = document.createElement('div');
+            text_holder.setAttribute('class', "mdl-cell mdl-cell--11-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label");
+
+            var input_label = document.createElement('label');
+            input_label.setAttribute('for', {{ room }});
+            input_label.setAttribute('class', "mdl-textfield__label");
+            input_label.innerHTML = "Enter a message...";
+
+            tab_body.appendChild(form_grid);
+            form_grid.appendChild(text_holder);
+            text_holder.appendChild(input_field);
+            text_holder.appendChild(input_label);
+
+            var icon = document.createElement('i');
+            icon.setAttribute('class', "material-icons");
+            icon.innerHTML = 'send';
+
+            var send_button = document.createElement('button');
+            send_button.setAttribute('class', "mdl-button mdl-button--fab mdl-button--accent mdl-js-button mdl-js-ripple-effect");
+
+            var button_div = document.createElement('div');
+            button_div.setAttribute('class', "mdl-cell mdl-cell--middle mdl-cell--stretch mdl-cell--1-col");
+
+            send_button.appendChild(icon);
+            button_div.appendChild(send_button);
+            form_grid.appendChild(button_div);
+
+
+
+
+
+        </script>
+        {%  else %}
+            <script>
+        // create tab link
+            var tab_link_container = document.getElementById("tab_link_container");
+            var tab_link = document.createElement("a");
+            var tab_href = "scroll-tab-" + {{ room }};
+            tab_link.setAttribute('href', '#' + tab_href);
+            tab_link.setAttribute('class', 'mdl-layout__tab');
+            tab_link.innerHTML = {{ room }};
+            tab_link_container.appendChild(tab_link);
+        // create tab body
+            var tab_body_container = document.getElementById("tab_body_container");
+            var tab_body = document.createElement("section");
+            tab_body.setAttribute('class', "mdl-layout__tab-panel");
+            tab_body.setAttribute('id', tab_href);
+            tab_body_container.appendChild(tab_body);
+
+        // fill body with tasty divs
+            var input_field = document.createElement('input');
+            input_field.setAttribute('class', 'text mdl-textfield__input');
+            input_field.setAttribute('type', 'text');
+            input_field.setAttribute('id', {{ room }});
+
+        // fill body with tasty divs
+
+            var form_grid = document.createElement('div');
+            form_grid.setAttribute('class', 'mdl-grid');
+            form_grid.setAttribute('id', 'form_grid');
+
+            var text_holder = document.createElement('div');
+            text_holder.setAttribute('class', "mdl-cell mdl-cell--11-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label");
+
+            var input_label = document.createElement('label');
+            input_label.setAttribute('for', {{ room }});
+            input_label.setAttribute('class', "mdl-textfield__label");
+            input_label.innerHTML = "Enter a message...";
+
+            tab_body.appendChild(form_grid);
+            form_grid.appendChild(text_holder);
+            text_holder.appendChild(input_field);
+            text_holder.appendChild(input_label);
+
+            var icon = document.createElement('i');
+            icon.setAttribute('class', "material-icons");
+            icon.innerHTML = 'send';
+
+            var send_button = document.createElement('button');
+            send_button.setAttribute('class', "mdl-button mdl-button--fab mdl-button--accent mdl-js-button mdl-js-ripple-effect");
+
+            var button_div = document.createElement('div');
+            button_div.setAttribute('class', "mdl-cell mdl-cell--middle mdl-cell--stretch mdl-cell--1-col");
+
+            send_button.appendChild(icon);
+            button_div.appendChild(send_button);
+            form_grid.appendChild(button_div);
+
+
+
+
+
+        </script>
+        {% endif %}
+    <div id={{room}}></div>
+    <h1 style="visibility:hidden;height:0;width:0;overflow:none;" class="room_names" id={{ room }}>Flask-SocketIO-Chat: {{ room }}</h1>
+    <messages class="mdl-grid" id ={{ chat_room|join}}>
+        <div class="mdl-list mdl-cell mdl-cell--12-col chat-container">
+        </div>
+      </messages>
+
+
+    {%  endfor %}
+
+{#        <div>#}
+{##}
+{#            <div class="mdl-grid" action="#">#}
+{#              <div class="mdl-cell mdl-cell--11-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">#}
+{#                <input class="mdl-textfield__input" type="text" id="chatmessage">#}
+{#                <label class="mdl-textfield__label" for="chatmessage">Enter a message...</label>#}
+{#              </div>#}
+{#              <div class="mdl-cell mdl-cell--middle mdl-cell--stretch mdl-cell--1-col">#}
+{#                <button class="mdl-button mdl-button--fab mdl-button--accent mdl-js-button mdl-js-ripple-effect">#}
+{#                  <i class="material-icons">send</i>#}
+{#                  <!-- <i class="material-icons">chat</i> also looks good, but defies convention a little. -->#}
+{#                </button>#}
+{#              </div>#}
+{#            </div>#}
+{#            </div>#}
+
+  </div>
+  </body>
+</html>
